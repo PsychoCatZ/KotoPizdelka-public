@@ -1,0 +1,23 @@
+[package]
+license = "MIT"
+name = "messenger-platform"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.89"
+publish = false
+
+[dependencies]
+messenger-core = { path = "../core" }
+tempfile = "3"
+thiserror = "2"
+zeroize = "1"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Security_Cryptography", "Win32_Storage_FileSystem", "Win32_UI_Controls_Dialogs", "Win32_UI_WindowsAndMessaging"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+jni = "0.21"
+
+[dev-dependencies]
+chacha20poly1305 = "0.10"
+rand = "0.8"

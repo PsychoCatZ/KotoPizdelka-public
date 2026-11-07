@@ -1,0 +1,35 @@
+[package]
+license = "MIT"
+name = "kotopizdelka-desktop"
+version = "0.2.11"
+edition = "2021"
+rust-version = "1.90"
+publish = false
+
+[lib]
+name = "kotopizdelka_lib"
+crate-type = ["rlib", "cdylib", "staticlib"]
+
+[dependencies]
+messenger-platform = { path = "../../../crates/platform" }
+messenger-app = { path = "../../../crates/app" }
+
+[target.'cfg(any(windows, target_os = "android"))'.dependencies]
+tauri = { version = "=2.12.1", default-features = false, features = ["wry"] }
+tauri-plugin-deep-link = "=2.6.1"
+serde_json = "1"
+
+[target.'cfg(windows)'.dependencies]
+tauri = { version = "=2.12.1", default-features = false, features = ["wry", "tray-icon"] }
+tauri-plugin-single-instance = { version = "=2.5.2", features = ["deep-link"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+serde = { version = "1", features = ["derive"] }
+jni = "0.21"
+tokio = { version = "1", features = ["rt", "time"] }
+
+[build-dependencies]
+tauri-build = { version = "=2.7.1", features = [] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]

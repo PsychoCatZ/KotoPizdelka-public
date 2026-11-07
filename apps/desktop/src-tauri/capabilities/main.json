@@ -1,0 +1,18 @@
+{
+  "identifier": "main",
+  "description": "Local messenger commands, explicit QR scanning, and invitation events for the main window.",
+  "windows": ["main"],
+  "permissions": [
+    "allow-dispatch",
+    "allow-profile-backup",
+    "allow-take-pending-invitation",
+    "allow-scan-invitation",
+    "allow-notification-settings",
+    "allow-set-notifications",
+    "allow-notification-view",
+    "allow-background-settings",
+    "allow-set-background",
+    "core:event:allow-listen",
+    "core:event:allow-unlisten"
+  ]
+}

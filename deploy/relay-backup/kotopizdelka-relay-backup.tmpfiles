@@ -1,0 +1,2 @@
+# Shared with the native updater; f creates only if absent and never truncates.
+f /run/kotopizdelka-relay-update.lock 0600 root root -

@@ -1,0 +1,11 @@
+[Unit]
+Description=Hourly verified KotoPizdelka relay backup
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=2min
+Persistent=true
+Unit=kotopizdelka-relay-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,40 @@
+{
+	admin off
+
+	# Keep startup/TLS warnings, but omit records that can serialize requests
+	# or client addresses. There is deliberately no site access-log directive.
+	log default {
+		level WARN
+		exclude http.log.access http.log.error http.stdlib
+	}
+
+	# Preserve UDP 443 for existing VPN services; this relay uses TCP only.
+	servers {
+		protocols h1 h2
+	}
+}
+
+RELAY_HOSTNAME {
+	request_body {
+		max_size 96KiB
+	}
+
+	# Administrative queue creation is available on loopback only.
+	@admin path /v1/queues
+	handle @admin {
+		respond "" 403
+	}
+
+	@client path /health /v1/queues/* /v1/accounts/*
+	handle @client {
+		reverse_proxy 127.0.0.1:8787 {
+			header_up -X-Forwarded-For
+			header_up -X-Real-IP
+			header_up -Forwarded
+		}
+	}
+
+	handle {
+		respond "" 404
+	}
+}
